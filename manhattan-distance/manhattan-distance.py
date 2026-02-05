@@ -8,5 +8,5 @@ def manhattan_distance(x, y):
     x = np.array(x)
     y = np.array(y)
 
-    dis = np.abs(x - y)
-    return float(np.sum(dis))
+    dis = np.sum(np.abs(x - y))
+    return float(dis)
