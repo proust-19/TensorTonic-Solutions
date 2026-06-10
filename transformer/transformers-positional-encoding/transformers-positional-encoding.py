@@ -6,13 +6,10 @@ def positional_encoding(seq_length: int, d_model: int) -> np.ndarray:
     """
     pos_encod = np.zeros((seq_length, d_model))
     
-    for pos in range(seq_length):
-        for i in range(d_model):
-            if i%2 == 0:
-                l = pow(10000, i / d_model)
-                pos_encod[pos][i] = np.sin(pos/l)
-            else:
-                l = pow(10000, (i-1) / d_model)
-                pos_encod[pos][i] = np.cos(pos/l)
+    pos = np.arange(seq_length).reshape(-1, 1)
+
+    div_t = np.exp(np.arange(0, d_model, 2) * (-np.log(10000.0) / d_model))
+    pos_encod[:, 0::2] = np.sin(pos*div_t)
+    pos_encod[:, 1::2] = np.cos(pos*div_t)
 
     return pos_encod
